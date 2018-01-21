@@ -76,13 +76,17 @@ def sub_multi(nums):
 ### Loop through the results array and print out each line ###
 def print_results(all_results):
     for r in all_results:
-        print(format(r['num1'], '02d'), r['operator'], format(r['num2'], '02d'), '=', r['result'])
+        if 'Sum' in r['operator']:
+            print(r['operator'], '=', r['result'])
+        else:
+            print(format(r['num1'], '02d'), r['operator'], format(r['num2'], '02d'), '=', r['result'])
 
 
+### This function creates a random number of random numbers in a list (it gets trippy) ###
 def get_random_nums(maxc):
     nums = []
     for i in range(int(random.random() * maxc + 1)):
-        nums.append = int(random.random() * 99 + 1)
+        nums.append(int(random.random() * 99 + 1))
     return nums
 
 ### Main execution function ###
@@ -98,13 +102,13 @@ def main():
         #Ask the user for their choice 
         choice = input("\nWould you like to enter your own equation (Enter 1), randomly generate equations (Enter 2), or leave (Enter 0): ")
         #choose user input
-        if choice == 1:
+        if choice == '1':
             number_one, number_two, operator = get_inputs()
         #choose to auto run 10 equations
-        elif choice == 2:
+        elif choice == '2':
             num_loops = 10
         #exit program
-        elif choice == 0:
+        elif choice == '0':
             break
         #the input choice was not valid, try again
         else:
@@ -125,10 +129,11 @@ def main():
                 random_nums = get_random_nums(10)
                 if int(random.random() * 2) == 1:
                     single_result['result'] = add_multi(random_nums)
-                    single_result['operator'] = 'Sum (add):'
+                    single_result['operator'] = 'Sum (add)'
                 else:
                     single_result['result'] = sub_multi(random_nums)
-                    single_result['operator'] = 'Sum (subtract):'
+                    single_result['operator'] = 'Sum (subtract)'
+                all_results.append(single_result)
                 continue
 
 
@@ -156,7 +161,7 @@ def main():
                 single_result['result'] = mod_two(number_one, number_two)
                 single_result['operator'] = '%'
 
-            #make sure to add the two numbers to the result so they print
+            #make sure to add the two original numbers to the result so the equation prints properly
             single_result['num1'] = number_one
             single_result['num2'] = number_two
                 
