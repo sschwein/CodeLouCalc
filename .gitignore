@@ -1,0 +1,4 @@
+*.pyc
+keyfile.json
+*.json
+*.csv
