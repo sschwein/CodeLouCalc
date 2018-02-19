@@ -6,9 +6,11 @@ API_KEY = ''
 with open('keyfile.json') as keyfile:
     keyfile = json.loads(keyfile.read())
     API_KEY = str(keyfile['propublica_api_key'])
+
 API_URL = 'https://api.propublica.org/congress/v1/'
 MEMBER_ENDPOINT = '{congress}/{chamber}/members.json'
 RECENT_BILL_ENDPOINT = '{congress}/{chamber}/bills/{type}.json'
+
 API_HEADERS = {'X-API-Key':API_KEY}
 
 def get_page(endpoint, **kwargs):
@@ -35,12 +37,14 @@ def get_page(endpoint, **kwargs):
 
 def print_json_file(name, txt):
     """Takes a JSON object and prints it out to a file"""
+
     with open(name, 'w') as out_file:
         out_file.write(json.dumps(txt))
 
 def print_pretty_json_file(name, txt):
     """Takes a JSON object and prints it out to a file.
     Output is sorted and indented for easy viewing"""
+
     with open(name, 'w') as out_file:
         out_file.write(json.dumps(txt, sort_keys=True, indent=4))
 
@@ -48,6 +52,7 @@ def print_csv_members(name, txt):
     """Used to output a list of congressional members to a CSV file
     Output is pipe ("|") delimited and contains one header row.
     """
+
     with open(name, 'w', newline='') as csvfile:
         ### Initialize CSV Writer ###
         csv_writer = csv.writer(csvfile, delimiter='|',
@@ -74,6 +79,7 @@ def print_csv_bills(name, txt):
     Output is pipe ("|") delimited and contains one header row.
     Python collections are cast as a string and left unformatted.
     """
+
     with open(name, 'w', newline='') as csvfile:
         ### Initialize CSV Writer ###
         csv_writer = csv.writer(csvfile, delimiter='|',
@@ -97,6 +103,7 @@ def print_csv_bills(name, txt):
 
 def get_all_members(congress):
     """Get all members of congress for a specified Congress"""
+
     ### First get the Senate Members ###
     mem_params = {'congress':congress,'chamber':'senate'}
     members = get_page('member', **mem_params)
@@ -113,6 +120,7 @@ def get_all_members(congress):
 
 def get_recent_bills(congress):
     """Get the most recently updated 20 bills from Congress"""
+    
     ### Get All Recent Bills ###
     bill_params = {'congress':congress,'chamber':'both','type':'updated'}
     bills = get_page('recent_bill', **bill_params)
